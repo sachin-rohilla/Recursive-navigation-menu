@@ -9,6 +9,9 @@ import { useState } from "react";
 import Modal from "./components/Modal";
 import InputComp from "./components/InputComp";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   const [showDepartmentModal, setShowDepartmentModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -45,6 +48,7 @@ function App() {
       setShowDepartmentModal(false);
       setFormData({ department: "" });
     }
+    toast.success("Department added successfully");
   };
 
   const handleAddCategory = () => {
@@ -56,6 +60,7 @@ function App() {
       setShowCategoryModal(false);
       setFormData({ category: "" });
     }
+    toast.success("Category added successfully");
   };
 
   const handleAddSubCategory = () => {
@@ -72,6 +77,7 @@ function App() {
 
       setFormData({ subCategory: "" });
     }
+    toast.success("SubCategory added successfully");
   };
 
   const handleShowCategory = (index) => {
@@ -129,6 +135,7 @@ function App() {
                             (item) => item?.department !== deptList?.department
                           )
                         );
+                      toast.success("Department deleted successfully");
                     }}
                   />
                 </span>
@@ -180,6 +187,9 @@ function App() {
                                               filterCatList?.category
                                           )
                                         );
+                                      toast.success(
+                                        "Category deleted successfully"
+                                      );
                                     }}
                                   />
                                 </span>
@@ -214,6 +224,9 @@ function App() {
                                                       item?.subCategory !==
                                                       filteredSubCat?.subCategory
                                                   )
+                                                );
+                                                toast.success(
+                                                  "SubCategory deleted successfully"
                                                 );
                                               }}
                                             />
@@ -334,6 +347,7 @@ function App() {
         </Modal>
       )}
       {/* subCategory modal end */}
+      <ToastContainer />
     </>
   );
 }
