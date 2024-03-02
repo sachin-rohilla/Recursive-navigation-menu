@@ -1,8 +1,7 @@
-import { CiCirclePlus, CiFolderOn } from "react-icons/ci";
-import { CiCircleMinus } from "react-icons/ci";
-import { FaFolder } from "react-icons/fa";
+import { FaEdit, FaFolder } from "react-icons/fa";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { AiFillMinusCircle } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 import "./App.css";
 import { useState } from "react";
 import Modal from "./components/Modal";
@@ -82,10 +81,14 @@ function App() {
       : setShowSubCategory(index);
   };
 
+  console.log(departmentList, categoryList, subCategoryList);
+
   return (
     <>
       <div className="p-4">
-        <h1 className="text-xl font-bold">Recursive Navigation Menu</h1>
+        <h1 className="text-xl font-bold text-[#8b5cf6] mb-2">
+          Let's Get Started
+        </h1>
 
         {/* department list start */}
         {departmentList?.length > 0 &&
@@ -95,7 +98,7 @@ function App() {
                 {showCategory === index ? (
                   <AiFillMinusCircle
                     onClick={() => handleShowCategory(index)}
-                    className="text-2xl"
+                    className="text-[27px]"
                   />
                 ) : (
                   <BsFillPlusCircleFill
@@ -103,7 +106,30 @@ function App() {
                     className="text-2xl"
                   />
                 )}
-                <p className="">{deptList?.department}</p>
+                <p>{deptList?.department}</p>
+                <span className="flex items-center gap-1">
+                  <FaEdit className="text-2xl" />
+                  <MdDelete
+                    className="text-2xl"
+                    onClick={() => {
+                      setDepartmentList(
+                        departmentList?.filter(
+                          (item) => item?.department !== deptList?.department
+                        )
+                      ),
+                        setCategoryList(
+                          categoryList?.filter(
+                            (item) => item?.department !== deptList?.department
+                          )
+                        ),
+                        setSubCategoryList(
+                          subCategoryList?.filter(
+                            (item) => item?.department !== deptList?.department
+                          )
+                        );
+                    }}
+                  />
+                </span>
               </div>
               <div>
                 {showCategory === index && (
@@ -118,11 +144,11 @@ function App() {
                           )
                           ?.map((filterCatList, index) => (
                             <div key={index}>
-                              <div className="flex items-center gap-2  my-2  cursor-pointer text-[#8b5cf6] font-semibold ">
+                              <div className="flex items-center gap-2 ml-4  my-2  cursor-pointer text-[#8b5cf6] font-semibold ">
                                 {showSubCategory === index ? (
                                   <AiFillMinusCircle
                                     onClick={() => handleShowSubCategory(index)}
-                                    className="text-2xl"
+                                    className="text-[27px]"
                                   />
                                 ) : (
                                   <BsFillPlusCircleFill
@@ -133,6 +159,28 @@ function App() {
                                 <p className=" capitalize">
                                   {filterCatList?.category}
                                 </p>
+                                <span className="flex items-center gap-1">
+                                  <FaEdit className="text-2xl" />
+                                  <MdDelete
+                                    className="text-2xl"
+                                    onClick={() => {
+                                      setCategoryList(
+                                        categoryList?.filter(
+                                          (item) =>
+                                            item?.category !==
+                                            filterCatList?.category
+                                        )
+                                      ),
+                                        setSubCategoryList(
+                                          subCategoryList?.filter(
+                                            (item) =>
+                                              item?.category !==
+                                              filterCatList?.category
+                                          )
+                                        );
+                                    }}
+                                  />
+                                </span>
                               </div>
 
                               {showSubCategory === index && (
@@ -153,6 +201,21 @@ function App() {
                                           <p className="cursor-pointer capitalize">
                                             {filteredSubCat?.subCategory}
                                           </p>
+                                          <span className="flex items-center gap-1">
+                                            <FaEdit className="text-2xl" />
+                                            <MdDelete
+                                              className="text-2xl"
+                                              onClick={() => {
+                                                setSubCategoryList(
+                                                  subCategoryList?.filter(
+                                                    (item) =>
+                                                      item?.subCategory !==
+                                                      filteredSubCat?.subCategory
+                                                  )
+                                                );
+                                              }}
+                                            />
+                                          </span>
                                         </div>
                                       ))}
 
