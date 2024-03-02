@@ -114,9 +114,9 @@ function App() {
                     className="text-2xl"
                   />
                 )}
-                <p>{deptList?.department}</p>
+                <p className="capitalize">{deptList?.department}</p>
                 <span className="flex items-center gap-1">
-                  <FaEdit className="text-xl" />
+                  {/* <FaEdit className="text-xl" /> */}
                   <MdDelete
                     className="text-xl"
                     onClick={() => {
@@ -169,7 +169,7 @@ function App() {
                                   {filterCatList?.category}
                                 </p>
                                 <span className="flex items-center gap-1">
-                                  <FaEdit className="text-xl" />
+                                  {/* <FaEdit className="text-xl" /> */}
                                   <MdDelete
                                     className="text-xl"
                                     onClick={() => {
@@ -214,7 +214,7 @@ function App() {
                                             {filteredSubCat?.subCategory}
                                           </p>
                                           <span className="flex items-center gap-1">
-                                            <FaEdit className="text-xl" />
+                                            {/* <FaEdit className="text-xl" /> */}
                                             <MdDelete
                                               className="text-xl"
                                               onClick={() => {
