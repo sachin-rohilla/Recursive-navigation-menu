@@ -1,5 +1,8 @@
-import { CiCirclePlus } from "react-icons/ci";
+import { CiCirclePlus, CiFolderOn } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
+import { FaFolder } from "react-icons/fa";
+import { BsFillPlusCircleFill } from "react-icons/bs";
+import { AiFillMinusCircle } from "react-icons/ai";
 import "./App.css";
 import { useState } from "react";
 import Modal from "./components/Modal";
@@ -78,29 +81,29 @@ function App() {
       ? setShowSubCategory(null)
       : setShowSubCategory(index);
   };
-  console.log(categoryList, subCategoryList);
+
   return (
     <>
-      <div>
+      <div className="p-4">
         <h1 className="text-xl font-bold">Recursive Navigation Menu</h1>
 
         {/* department list start */}
         {departmentList?.length > 0 &&
           departmentList?.map((deptList, index) => (
             <div key={index}>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mb-2   cursor-pointer text-[#8b5cf6] font-semibold">
                 {showCategory === index ? (
-                  <CiCircleMinus
+                  <AiFillMinusCircle
                     onClick={() => handleShowCategory(index)}
                     className="text-2xl"
                   />
                 ) : (
-                  <CiCirclePlus
+                  <BsFillPlusCircleFill
                     onClick={() => handleShowCategory(index)}
                     className="text-2xl"
                   />
                 )}
-                <p className="cursor-pointer">{deptList?.department}</p>
+                <p className="">{deptList?.department}</p>
               </div>
               <div>
                 {showCategory === index && (
@@ -115,19 +118,19 @@ function App() {
                           )
                           ?.map((filterCatList, index) => (
                             <div key={index}>
-                              <div className="flex items-center gap-2 ml-4">
+                              <div className="flex items-center gap-2  my-2  cursor-pointer text-[#8b5cf6] font-semibold ">
                                 {showSubCategory === index ? (
-                                  <CiCircleMinus
+                                  <AiFillMinusCircle
                                     onClick={() => handleShowSubCategory(index)}
                                     className="text-2xl"
                                   />
                                 ) : (
-                                  <CiCirclePlus
+                                  <BsFillPlusCircleFill
                                     onClick={() => handleShowSubCategory(index)}
                                     className="text-2xl"
                                   />
                                 )}
-                                <p className="cursor-pointer">
+                                <p className=" capitalize">
                                   {filterCatList?.category}
                                 </p>
                               </div>
@@ -142,26 +145,26 @@ function App() {
                                           filterCatList?.category
                                       )
                                       ?.map((filteredSubCat, subIndex) => (
-                                        <div key={subIndex}>
-                                          <p className="cursor-pointer ml-16">
+                                        <div
+                                          key={subIndex}
+                                          className="ml-16 flex items-center gap-2 text-[#8b5cf6] font-semibold "
+                                        >
+                                          <FaFolder className="text-xl " />
+                                          <p className="cursor-pointer capitalize">
                                             {filteredSubCat?.subCategory}
                                           </p>
                                         </div>
                                       ))}
 
-                                  <div className="flex items-center gap-2 ml-8">
-                                    <CiCirclePlus className="text-2xl" />
-                                    <p
-                                      onClick={() => {
-                                        setShowSubCategoryModal(true),
-                                          setCategoryId(
-                                            filterCatList?.category
-                                          );
-                                      }}
-                                      className="cursor-pointer"
-                                    >
-                                      Add SubCategory
-                                    </p>
+                                  <div
+                                    className="flex items-center gap-2 ml-8 cursor-pointer text-[#8b5cf6] font-semibold "
+                                    onClick={() => {
+                                      setShowSubCategoryModal(true),
+                                        setCategoryId(filterCatList?.category);
+                                    }}
+                                  >
+                                    <BsFillPlusCircleFill className="text-2xl" />
+                                    <p>Add SubCategory</p>
                                   </div>
                                 </>
                               )}
@@ -169,17 +172,15 @@ function App() {
                           ))}
                       {/* category list end */}
                     </div>
-                    <div className="flex items-center gap-2 ml-4">
-                      <CiCirclePlus className="text-2xl" />
-                      <p
-                        onClick={() => {
-                          setShowCategoryModal(true),
-                            setDepartmentId(deptList?.department);
-                        }}
-                        className="cursor-pointer"
-                      >
-                        Add Category
-                      </p>
+                    <div
+                      className="flex items-center gap-2 ml-4 my-2 text-[#8b5cf6] font-semibold cursor-pointer"
+                      onClick={() => {
+                        setShowCategoryModal(true),
+                          setDepartmentId(deptList?.department);
+                      }}
+                    >
+                      <BsFillPlusCircleFill className="text-2xl" />
+                      <p>Add Category</p>
                     </div>
                   </>
                 )}
@@ -188,14 +189,12 @@ function App() {
           ))}
         {/* department list end */}
 
-        <div className="flex items-center gap-2">
-          <CiCirclePlus className="text-2xl" />
-          <p
-            onClick={() => setShowDepartmentModal(true)}
-            className="cursor-pointer"
-          >
-            Add Department
-          </p>
+        <div
+          className="flex items-center gap-2 cursor-pointer text-[#8b5cf6] font-semibold"
+          onClick={() => setShowDepartmentModal(true)}
+        >
+          <BsFillPlusCircleFill className="text-2xl " />
+          <p className="">Add Department</p>
         </div>
       </div>
 
@@ -214,7 +213,7 @@ function App() {
             />
             <button
               onClick={handleAddDepartment}
-              className="bg-yellow-400 py-2 mt-2 rounded-md text-white w-full"
+              className="bg-[#a78bfa] py-2  mt-2 rounded-md text-white w-full"
             >
               Add Department
             </button>
@@ -238,7 +237,7 @@ function App() {
             />
             <button
               onClick={handleAddCategory}
-              className="bg-yellow-400 py-2 mt-2 rounded-md text-white w-full"
+              className="bg-[#a78bfa]  py-2 mt-2 rounded-md text-white w-full"
             >
               Add Category
             </button>
@@ -262,7 +261,7 @@ function App() {
             />
             <button
               onClick={handleAddSubCategory}
-              className="bg-yellow-400 py-2 mt-2 rounded-md text-white w-full"
+              className="bg-[#a78bfa] py-2 mt-2 rounded-md text-white w-full"
             >
               Add SubCategory
             </button>

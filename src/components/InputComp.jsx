@@ -16,7 +16,7 @@ const InputComp = ({
         name={title}
         placeholder={placeholder}
         onChange={handleChange}
-        className={`w-full border border-gray-300 p-2 rounded-md ${style}`}
+        className={`w-full border border-gray-300 p-2 rounded-md focus:border-[#a78bfa] focus:outline-none ${style}`}
         required
       />
     </div>
