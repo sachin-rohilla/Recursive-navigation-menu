@@ -7,14 +7,19 @@ import InputComp from "./components/InputComp";
 function App() {
   const [showDepartmentModal, setShowDepartmentModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showSubCategoryModal, setShowSubCategoryModal] = useState(false);
   const [showCategory, setShowCategory] = useState(null);
+  const [showSubCategory, setShowSubCategory] = useState(null);
   const [departmentId, setDepartmentId] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
   const [formData, setFormData] = useState({
     department: "",
     category: "",
+    subCategory: " ",
   });
   const [departmentList, setDepartmentList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+  const [subCategoryList, setSubCategoryList] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,11 +53,29 @@ function App() {
     }
   };
 
+  const handleAddSubCategory = () => {
+    if (formData?.subCategory) {
+      setSubCategoryList([
+        ...subCategoryList,
+        {
+          department: departmentId,
+          category: categoryId,
+          subCategory: formData?.subCategory,
+        },
+      ]);
+      setShowSubCategoryModal(false);
+
+      setFormData({ subCategory: "" });
+    }
+  };
+
   const handleShowCategory = (index) => {
     setShowCategory(index);
   };
-
-  console.log(departmentList, categoryList);
+  const handleShowSubCategory = (index) => {
+    setShowSubCategory(index);
+  };
+  console.log(categoryList, subCategoryList);
   return (
     <>
       <div>
@@ -72,18 +95,6 @@ function App() {
               <div>
                 {showCategory === index && (
                   <>
-                    <div className="flex items-center gap-2 ml-4">
-                      <CiCirclePlus className="text-2xl" />
-                      <p
-                        onClick={() => {
-                          setShowCategoryModal(true),
-                            setDepartmentId(deptList?.department);
-                        }}
-                        className="cursor-pointer"
-                      >
-                        Add Category
-                      </p>
-                    </div>
                     <div>
                       {/* category list start */}
                       {categoryList?.length > 0 &&
@@ -96,16 +107,62 @@ function App() {
                             <div key={index}>
                               <div className="flex items-center gap-2 ml-4">
                                 <CiCirclePlus
-                                  onClick={() => handleShowCategory(index)}
+                                  onClick={() => handleShowSubCategory(index)}
                                   className="text-2xl"
                                 />
                                 <p className="cursor-pointer">
                                   {filterCatList?.category}
                                 </p>
                               </div>
+
+                              {showSubCategory === index && (
+                                <>
+                                  {subCategoryList?.length > 0 &&
+                                    subCategoryList
+                                      ?.filter(
+                                        (subList) =>
+                                          subList?.category ===
+                                          filterCatList?.category
+                                      )
+                                      ?.map((filteredSubCat, subIndex) => (
+                                        <div key={subIndex}>
+                                          <p className="cursor-pointer ml-16">
+                                            {filteredSubCat?.subCategory}
+                                          </p>
+                                        </div>
+                                      ))}
+
+                                  <div className="flex items-center gap-2 ml-8">
+                                    <CiCirclePlus className="text-2xl" />
+                                    <p
+                                      onClick={() => {
+                                        setShowSubCategoryModal(true),
+                                          setCategoryId(
+                                            filterCatList?.category
+                                          );
+                                      }}
+                                      className="cursor-pointer"
+                                    >
+                                      Add SubCategory
+                                    </p>
+                                  </div>
+                                </>
+                              )}
                             </div>
                           ))}
                       {/* category list end */}
+                    </div>
+                    <div className="flex items-center gap-2 ml-4">
+                      <CiCirclePlus className="text-2xl" />
+                      <p
+                        onClick={() => {
+                          setShowCategoryModal(true),
+                            setDepartmentId(deptList?.department);
+                        }}
+                        className="cursor-pointer"
+                      >
+                        Add Category
+                      </p>
                     </div>
                   </>
                 )}
@@ -172,6 +229,30 @@ function App() {
         </Modal>
       )}
       {/* categor modal end */}
+
+      {/* subCategory modal start */}
+      {showSubCategoryModal && (
+        <Modal handleClose={() => setShowSubCategoryModal(false)}>
+          <div className="flex flex-col items-center   ">
+            <h1 className="font-bold">Add SubCategory</h1>
+            <InputComp
+              type="text"
+              title="subCategory"
+              placeholder="Enter SubCategory Name"
+              value={formData.subCategory}
+              handleChange={handleChange}
+              style="mt-2"
+            />
+            <button
+              onClick={handleAddSubCategory}
+              className="bg-yellow-400 py-2 mt-2 rounded-md text-white w-full"
+            >
+              Add SubCategory
+            </button>
+          </div>
+        </Modal>
+      )}
+      {/* subCategory modal end */}
     </>
   );
 }
