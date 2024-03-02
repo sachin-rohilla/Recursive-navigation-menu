@@ -2,6 +2,8 @@ import { FaEdit, FaFolder } from "react-icons/fa";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { AiFillMinusCircle } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
+import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import "./App.css";
 import { useState } from "react";
 import Modal from "./components/Modal";
@@ -96,21 +98,21 @@ function App() {
             <div key={index}>
               <div className="flex items-center gap-2 mb-2   cursor-pointer text-[#8b5cf6] font-semibold">
                 {showCategory === index ? (
-                  <AiFillMinusCircle
+                  <IoIosArrowUp
                     onClick={() => handleShowCategory(index)}
                     className="text-[27px]"
                   />
                 ) : (
-                  <BsFillPlusCircleFill
+                  <IoIosArrowDown
                     onClick={() => handleShowCategory(index)}
                     className="text-2xl"
                   />
                 )}
                 <p>{deptList?.department}</p>
                 <span className="flex items-center gap-1">
-                  <FaEdit className="text-2xl" />
+                  <FaEdit className="text-xl" />
                   <MdDelete
-                    className="text-2xl"
+                    className="text-xl"
                     onClick={() => {
                       setDepartmentList(
                         departmentList?.filter(
@@ -146,12 +148,12 @@ function App() {
                             <div key={index}>
                               <div className="flex items-center gap-2 ml-4  my-2  cursor-pointer text-[#8b5cf6] font-semibold ">
                                 {showSubCategory === index ? (
-                                  <AiFillMinusCircle
+                                  <IoIosArrowUp
                                     onClick={() => handleShowSubCategory(index)}
                                     className="text-[27px]"
                                   />
                                 ) : (
-                                  <BsFillPlusCircleFill
+                                  <IoIosArrowDown
                                     onClick={() => handleShowSubCategory(index)}
                                     className="text-2xl"
                                   />
@@ -160,9 +162,9 @@ function App() {
                                   {filterCatList?.category}
                                 </p>
                                 <span className="flex items-center gap-1">
-                                  <FaEdit className="text-2xl" />
+                                  <FaEdit className="text-xl" />
                                   <MdDelete
-                                    className="text-2xl"
+                                    className="text-xl"
                                     onClick={() => {
                                       setCategoryList(
                                         categoryList?.filter(
@@ -195,16 +197,16 @@ function App() {
                                       ?.map((filteredSubCat, subIndex) => (
                                         <div
                                           key={subIndex}
-                                          className="ml-16 flex items-center gap-2 text-[#8b5cf6] font-semibold "
+                                          className="ml-16 mb-2 flex items-center gap-2 text-[#8b5cf6] font-semibold "
                                         >
                                           <FaFolder className="text-xl " />
                                           <p className="cursor-pointer capitalize">
                                             {filteredSubCat?.subCategory}
                                           </p>
                                           <span className="flex items-center gap-1">
-                                            <FaEdit className="text-2xl" />
+                                            <FaEdit className="text-xl" />
                                             <MdDelete
-                                              className="text-2xl"
+                                              className="text-xl"
                                               onClick={() => {
                                                 setSubCategoryList(
                                                   subCategoryList?.filter(
