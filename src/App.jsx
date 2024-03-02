@@ -1,4 +1,5 @@
 import { CiCirclePlus } from "react-icons/ci";
+import { CiCircleMinus } from "react-icons/ci";
 import "./App.css";
 import { useState } from "react";
 import Modal from "./components/Modal";
@@ -70,10 +71,12 @@ function App() {
   };
 
   const handleShowCategory = (index) => {
-    setShowCategory(index);
+    showCategory === index ? setShowCategory(null) : setShowCategory(index);
   };
   const handleShowSubCategory = (index) => {
-    setShowSubCategory(index);
+    showSubCategory === index
+      ? setShowSubCategory(null)
+      : setShowSubCategory(index);
   };
   console.log(categoryList, subCategoryList);
   return (
@@ -86,10 +89,17 @@ function App() {
           departmentList?.map((deptList, index) => (
             <div key={index}>
               <div className="flex items-center gap-2">
-                <CiCirclePlus
-                  onClick={() => handleShowCategory(index)}
-                  className="text-2xl"
-                />
+                {showCategory === index ? (
+                  <CiCircleMinus
+                    onClick={() => handleShowCategory(index)}
+                    className="text-2xl"
+                  />
+                ) : (
+                  <CiCirclePlus
+                    onClick={() => handleShowCategory(index)}
+                    className="text-2xl"
+                  />
+                )}
                 <p className="cursor-pointer">{deptList?.department}</p>
               </div>
               <div>
@@ -106,10 +116,17 @@ function App() {
                           ?.map((filterCatList, index) => (
                             <div key={index}>
                               <div className="flex items-center gap-2 ml-4">
-                                <CiCirclePlus
-                                  onClick={() => handleShowSubCategory(index)}
-                                  className="text-2xl"
-                                />
+                                {showSubCategory === index ? (
+                                  <CiCircleMinus
+                                    onClick={() => handleShowSubCategory(index)}
+                                    className="text-2xl"
+                                  />
+                                ) : (
+                                  <CiCirclePlus
+                                    onClick={() => handleShowSubCategory(index)}
+                                    className="text-2xl"
+                                  />
+                                )}
                                 <p className="cursor-pointer">
                                   {filterCatList?.category}
                                 </p>
