@@ -1,7 +1,7 @@
 import { FaEdit, FaFolder } from "react-icons/fa";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { AiFillMinusCircle } from "react-icons/ai";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import "./App.css";
@@ -47,8 +47,10 @@ function App() {
       ]);
       setShowDepartmentModal(false);
       setFormData({ department: "" });
+      toast.success("Department added successfully");
+    } else {
+      toast.error("Please enter department name");
     }
-    toast.success("Department added successfully");
   };
 
   const handleAddCategory = () => {
@@ -59,8 +61,10 @@ function App() {
       ]);
       setShowCategoryModal(false);
       setFormData({ category: "" });
+      toast.success("Category added successfully");
+    } else {
+      toast.error("Please enter category name");
     }
-    toast.success("Category added successfully");
   };
 
   const handleAddSubCategory = () => {
@@ -76,8 +80,10 @@ function App() {
       setShowSubCategoryModal(false);
 
       setFormData({ subCategory: "" });
+      toast.success("SubCategory added successfully");
+    } else {
+      toast.error("Please enter subCategory name");
     }
-    toast.success("SubCategory added successfully");
   };
 
   const handleShowCategory = (index) => {
@@ -117,6 +123,7 @@ function App() {
                 <p className="capitalize">{deptList?.department}</p>
                 <span className="flex items-center gap-1">
                   {/* <FaEdit className="text-xl" /> */}
+
                   <MdDelete
                     className="text-xl"
                     onClick={() => {
@@ -347,7 +354,7 @@ function App() {
         </Modal>
       )}
       {/* subCategory modal end */}
-      <ToastContainer />
+      <ToastContainer autoClose={2000} hideProgressBar />
     </>
   );
 }
