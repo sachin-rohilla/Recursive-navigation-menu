@@ -28,6 +28,9 @@ function App() {
   const [departmentList, setDepartmentList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const [subCategoryList, setSubCategoryList] = useState([]);
+  const [DepartmentEditData, setDepartmentEditData] = useState([]);
+  const [CategoryEditData, setCategoryEditData] = useState([]);
+  const [SubCategoryEditData, setSubCategoryEditData] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +40,7 @@ function App() {
         [name]: value,
       };
     });
+    console.log("hello");
   };
 
   const handleAddDepartment = () => {
@@ -95,7 +99,64 @@ function App() {
       : setShowSubCategory(index);
   };
 
-  console.log(departmentList, categoryList, subCategoryList);
+  const handleEditDepartment = () => {
+    if (!formData?.department) {
+      toast.error("Please enter department name");
+    } else {
+      const editData = departmentList?.map((item) =>
+        item?.department === DepartmentEditData[0]?.department
+          ? { department: formData?.department }
+          : item
+      );
+      setDepartmentList(editData);
+
+      setDepartmentEditData([]);
+      setFormData({ department: "" });
+
+      setShowDepartmentModal(false);
+      toast.success("Department updated successfully");
+    }
+  };
+
+  const handleEditCategory = () => {
+    if (!formData?.category) {
+      toast.error("Please enter category name");
+    } else {
+      const editData = categoryList?.map((item) =>
+        item?.category === CategoryEditData[0]?.category
+          ? { ...item, category: formData?.category }
+          : item
+      );
+      setCategoryList(editData);
+
+      setCategoryEditData([]);
+      setFormData({ category: "" });
+
+      setShowCategoryModal(false);
+      toast.success("category updated successfully");
+    }
+  };
+
+  const handleEditSubCategory = () => {
+    if (!formData?.subCategory) {
+      toast.error("Please enter subCategory name");
+    } else {
+      const editData = subCategoryList?.map((item) =>
+        item?.subCategory === SubCategoryEditData[0]?.subCategory
+          ? { ...item, subCategory: formData?.subCategory }
+          : item
+      );
+      setSubCategoryList(editData);
+
+      setSubCategoryEditData([]);
+      setFormData({ subCategory: "" });
+
+      setShowSubCategoryModal(false);
+      toast.success("SubCategory updated successfully");
+    }
+  };
+
+  console.log(departmentList, categoryList, subCategoryList, CategoryEditData);
 
   return (
     <>
@@ -122,7 +183,16 @@ function App() {
                 )}
                 <p className="capitalize">{deptList?.department}</p>
                 <span className="flex items-center gap-1">
-                  {/* <FaEdit className="text-xl" /> */}
+                  <FaEdit
+                    className="text-xl"
+                    onClick={() => {
+                      setDepartmentEditData([deptList]);
+                      setShowDepartmentModal(true);
+                      setFormData({
+                        department: deptList?.department,
+                      });
+                    }}
+                  />
 
                   <MdDelete
                     className="text-xl"
@@ -176,7 +246,17 @@ function App() {
                                   {filterCatList?.category}
                                 </p>
                                 <span className="flex items-center gap-1">
-                                  {/* <FaEdit className="text-xl" /> */}
+                                  <FaEdit
+                                    className="text-xl"
+                                    onClick={() => {
+                                      setCategoryEditData([filterCatList]);
+                                      setShowCategoryModal(true);
+                                      setFormData({
+                                        category: filterCatList?.category,
+                                      });
+                                    }}
+                                  />
+
                                   <MdDelete
                                     className="text-xl"
                                     onClick={() => {
@@ -221,7 +301,19 @@ function App() {
                                             {filteredSubCat?.subCategory}
                                           </p>
                                           <span className="flex items-center gap-1">
-                                            {/* <FaEdit className="text-xl" /> */}
+                                            <FaEdit
+                                              className="text-xl"
+                                              onClick={() => {
+                                                setSubCategoryEditData([
+                                                  filteredSubCat,
+                                                ]);
+                                                setShowSubCategoryModal(true);
+                                                setFormData({
+                                                  subCategory:
+                                                    filteredSubCat?.subCategory,
+                                                });
+                                              }}
+                                            />
                                             <MdDelete
                                               className="text-xl"
                                               onClick={() => {
@@ -285,9 +377,19 @@ function App() {
 
       {/* department modal start */}
       {showDepartmentModal && (
-        <Modal handleClose={() => setShowDepartmentModal(false)}>
+        <Modal
+          handleClose={() => {
+            setShowDepartmentModal(false);
+            setDepartmentEditData([]);
+            setFormData({ department: "" });
+          }}
+        >
           <div className="flex flex-col items-center   ">
-            <h1 className="font-bold">Add Department</h1>
+            <h1 className="font-bold">
+              {DepartmentEditData?.length > 0
+                ? "Edit Department"
+                : "Add Department"}
+            </h1>
             <InputComp
               type="text"
               title="department"
@@ -297,10 +399,16 @@ function App() {
               style="mt-2"
             />
             <button
-              onClick={handleAddDepartment}
+              onClick={
+                DepartmentEditData?.length > 0
+                  ? handleEditDepartment
+                  : handleAddDepartment
+              }
               className="bg-[#a78bfa] py-2  mt-2 rounded-md text-white w-full"
             >
-              Add Department
+              {DepartmentEditData?.length > 0
+                ? "Edit Department"
+                : "Add Department"}
             </button>
           </div>
         </Modal>
@@ -309,9 +417,17 @@ function App() {
 
       {/* category modal start */}
       {showCategoryModal && (
-        <Modal handleClose={() => setShowCategoryModal(false)}>
+        <Modal
+          handleClose={() => {
+            setShowCategoryModal(false);
+            setCategoryEditData([]);
+            setFormData({ category: "" });
+          }}
+        >
           <div className="flex flex-col items-center   ">
-            <h1 className="font-bold">Add Category</h1>
+            <h1 className="font-bold">
+              {CategoryEditData?.length > 0 ? "Edit Category" : "Add Category"}
+            </h1>
             <InputComp
               type="text"
               title="category"
@@ -321,10 +437,14 @@ function App() {
               style="mt-2"
             />
             <button
-              onClick={handleAddCategory}
+              onClick={
+                CategoryEditData?.length > 0
+                  ? handleEditCategory
+                  : handleAddCategory
+              }
               className="bg-[#a78bfa]  py-2 mt-2 rounded-md text-white w-full"
             >
-              Add Category
+              {CategoryEditData?.length > 0 ? "Edit Category" : "Add Category"}
             </button>
           </div>
         </Modal>
@@ -333,9 +453,19 @@ function App() {
 
       {/* subCategory modal start */}
       {showSubCategoryModal && (
-        <Modal handleClose={() => setShowSubCategoryModal(false)}>
+        <Modal
+          handleClose={() => {
+            setShowSubCategoryModal(false);
+            setSubCategoryEditData([]);
+            setFormData({ subCategory: "" });
+          }}
+        >
           <div className="flex flex-col items-center   ">
-            <h1 className="font-bold">Add SubCategory</h1>
+            <h1 className="font-bold">
+              {SubCategoryEditData?.length > 0
+                ? "Edit SubCategory"
+                : "Add SubCategory"}
+            </h1>
             <InputComp
               type="text"
               title="subCategory"
@@ -345,10 +475,16 @@ function App() {
               style="mt-2"
             />
             <button
-              onClick={handleAddSubCategory}
+              onClick={
+                SubCategoryEditData?.length > 0
+                  ? handleEditSubCategory
+                  : handleAddSubCategory
+              }
               className="bg-[#a78bfa] py-2 mt-2 rounded-md text-white w-full"
             >
-              Add SubCategory
+              {SubCategoryEditData?.length > 0
+                ? "Edit SubCategory"
+                : "Add SubCategory"}
             </button>
           </div>
         </Modal>

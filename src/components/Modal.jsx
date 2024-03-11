@@ -6,7 +6,7 @@ const Modal = ({ handleClose, children }) => {
   return createPortal(
     <>
       <div className="fixed inset-0 flex items-center justify-center h-screen px-4 lg:px-0">
-        <div className="w-[400px]  z-10 bg-white shadow-lg rounded-lg p-2 relative">
+        <div className="w-[400px]  z-10 bg-white shadow-lg rounded-lg p-2 relative border">
           <IoCloseCircle
             className="text-2xl absolute top-2 right-2 cursor-pointer"
             onClick={handleClose}
